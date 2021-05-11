@@ -1,0 +1,34 @@
+```Searching for an Account:
+
+Command: ranksearch
+Aliases: searchrank, ranklookup
+Description: Prints all the accounts for the given rank
+Usage: $ranksearch Rank
+Example: $ranksearch Gold
+
+Command: usernamesearch
+Aliases: searchusername, usernamelookup, usersearch, searchuser, userlookup
+Description: Prints the account with the given username
+Usage: $usernamesearch Username
+Example: $usernamesearch Stinger0nly
+
+Command: printaccount
+Aliases: listaccount, printsmurf, listsmurf, printaccounts, listaccounts, printsmurfs, listsmurfs
+Description: Prints every account in the database
+Usage: $printaccount
+```
+```When Using an Account:
+
+Command: editstatus
+Aliases: updatestatus, changestatus, statuschange
+Description: Use this command before and after playing on an account
+Usage: $editstatus Username
+Example: $editstatus Stinger0nly
+```
+```Miscellaneous
+
+Command: helpsmurf
+Aliases: none
+Description: Prints a helpful message for all smurf related commands
+Usage: $helpsmurf
+```
