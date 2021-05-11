@@ -29,6 +29,7 @@ class Smurf(commands.Cog):
 
     #Sends a help message to the user about the smurf account commands
     @commands.command()
+    @commands.cooldown(1,30, commands.BucketType.guild)
     async def shelp(self, ctx):
         if smurfchannelcheck(ctx.channel.id):
             help1 = open(cwd+'\\textfiles\\help1.txt', "r")
@@ -218,6 +219,7 @@ class Smurf(commands.Cog):
 
     #Prints every account in the database
     @commands.command(name='sprint')
+    @commands.cooldown(1,10, commands.BucketType.guild)
     async def _sprint(self, ctx):
         if smurfchannelcheck(ctx.channel.id):
             for k, v in outer.items():
