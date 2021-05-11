@@ -5,41 +5,35 @@ The purpose of this channel is to have a database of smurf accounts so anyone ca
 ```
 ```Adding and Deleting Accounts:
 
-Command: addsmurf
-Aliases: addaccount
+Command: sadd
 Description: Adds an account to the smurf database
-Usage: $addsmurf Username Password Rank RankNumber
-Example: $addsmurf Stinger0nly sharedaccount! Platinum 1
+Usage: $sadd Username Password Rank RankNumber
+Example: $sadd Stinger0nly sharedaccount! Platinum 1
 
-Command: removesmurf
-Aliases: deletesmurf, deleteaccount, removeaccount
+Command: sremove
 Description: Removes an account from the smurf database
-Usage: $removesmurf Username
-Example: $removesmurf Stinger0nly
+Usage: $sremove Username
+Example: $sremove Stinger0nly
 ```
 ```Editing Account Information:
 
-Command: editusername
-Aliases: changeusername, usernamechange, userchange, changeuser, edituser
+Command: seusername
 Description: Changes the username of an account in the database
-Usage: $editusername OldUsername NewUsername
-Example: $editusername StingerOnly Stinger0nly
+Usage: $seusername OldUsername NewUsername
+Example: $seusername StingerOnly Stinger0nly
 
-Command: editpassword
-Aliases: changepassword, passwordchange
+Command: sepassword
 Description: Changes the password of an account in the database
-Usage: $editpassword Username NewPassword
-Example: $editpassword Stinger0nly sharedpassword!
+Usage: $sepassword Username NewPassword
+Example: $sepassword Stinger0nly sharedpassword!
 
-Command: editrank
-Aliases: changerank, rankchange
+Command: serank
 Description: Changes the rank of an account in the database
 Usage: $editrank Username NewRank NewRankNumber
 Example: $editrank Stinger0nly Bronze 3
 
-Command: editall
-Aliases: changeall, allchange
+Command: seall
 Description: Changes all information about an account in the database
-Usage: $editall OldUsername NewUsername NewPassword NewRank NewRankNumber
-Example: $editall StingerOnly Stinger0nly sharedaccount! Platinum 1
+Usage: $seall OldUsername NewUsername NewPassword NewRank NewRankNumber
+Example: $seall StingerOnly Stinger0nly sharedaccount! Platinum 1
 ```

@@ -220,8 +220,8 @@ async def _sranksearch(ctx, rank):
 
 
 #Finds the account with the wanted username
-@bot.command(name='susersearch')
-async def _susersearch(ctx, username):
+@bot.command(name='susernamesearch')
+async def _susernamesearch(ctx, username):
     if smurfchannelcheck(ctx.channel.id):
         for k, v in bot.outer.items():
             for x, y in v.items():
