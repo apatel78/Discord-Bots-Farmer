@@ -1,0 +1,29 @@
+```Searching for an Account:
+
+Command: ssrank
+Description: Prints all the accounts for the given rank
+Usage: $sranksearch Rank
+Example: $sranksearch Gold
+
+Command: ssusername
+Description: Prints the account with the given username
+Usage: $susernamesearch Username
+Example: $susernamesearch Stinger0nly
+
+Command: sprint
+Description: Prints every account in the database
+Usage: $sprint
+```
+```When Using an Account:
+
+Command: susing
+Description: Use this command before and after playing on an account
+Usage: $susing Username
+Example: $susing Stinger0nly
+```
+```Miscellaneous:
+
+Command: shelp
+Description: Prints a helpful message for all smurf related commands
+Usage: $shelp
+```
