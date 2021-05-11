@@ -12,6 +12,10 @@ outer = {}
 outer = json.load(open(cwd+'\localstorage\\smurfs.json'))
 outerKey = 0
 
+#Potential Improvements:
+#Sort the Dictionary
+
+
 #Smurf channel checker
 def smurfchannelcheck(channel):
     if channel == 840414501660917790 or channel == 840705049444483102:
@@ -234,5 +238,3 @@ class Smurf(commands.Cog):
 
 def setup(bot):
     bot.add_cog(Smurf(bot))
-
-#Make it so a user can only use one account at a time
