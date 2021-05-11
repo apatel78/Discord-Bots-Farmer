@@ -14,7 +14,7 @@ outerKey = 0
 
 #Potential Improvements:
 #Sort the Dictionary
-
+#React to message depending on successful or not
 
 #Smurf channel checker
 def smurfchannelcheck(channel):
