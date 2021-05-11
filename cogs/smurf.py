@@ -44,9 +44,14 @@ class Smurf(commands.Cog):
                         await ctx.send(f"{username} already exists")
                         return
             #Loop through all keys in outer Dictionary
-            for k in outer.keys():
-                if k == outerKey:
-                    outerKey = k + 1
+            temp = {int(k):v for k,v in outer.items()}
+            seen = True
+            while seen:
+                seen = False
+                for k,v in temp.items():
+                    if k == outerKey:
+                        outerKey = k + 1
+                        seen = True
             if (number == '0' or number == '1' or number == '2' or number == '3') and (not any(i.isdigit() for i in rank)):
                     rank = rank.upper()
                     inner = {
