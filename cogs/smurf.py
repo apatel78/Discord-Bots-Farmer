@@ -10,7 +10,7 @@ cwd = Path(__file__).parents[1]
 cwd = str(cwd)
 outer = {}
 outer = json.load(open(cwd+'\localstorage\\smurfs.json'))
-outerKey = 1
+outerKey = 0
 
 #Smurf channel checker
 def smurfchannelcheck(channel):
@@ -32,18 +32,22 @@ class Smurf(commands.Cog):
             await ctx.send(help1.read())
             await ctx.send(help2.read())
 
-
+    #MAKE IT SO NO K NUMBERS CAN BE THE SAME
     #Adds a smurf account to the Dicitionary
     @commands.command(name='sadd')
     async def _sadd(self, ctx, username, password, rank, number):
         if smurfchannelcheck(ctx.channel.id):
+            global outerKey
             for k, v in outer.items():
                 for x, y in v.items():
                     if y == username:
                         await ctx.send(f"{username} already exists")
                         return
+            #Loop through all keys in outer Dictionary
+            for k in outer.keys():
+                if k == outerKey:
+                    outerKey = k + 1
             if (number == '0' or number == '1' or number == '2' or number == '3') and (not any(i.isdigit() for i in rank)):
-                    global outerKey
                     rank = rank.upper()
                     inner = {
                         'Username': username,
@@ -147,6 +151,11 @@ class Smurf(commands.Cog):
     @commands.command(name='susing')
     async def _susing(self, ctx, username):
         if smurfchannelcheck(ctx.channel.id):
+            for k, v in outer.items():
+                for x, y in v.items():
+                    if v['Last User'] == ctx.author.name and v['Status'] and v['Username'] != username:
+                        await ctx.send(f"You can't use two accounts, please update the status of {v['Username']}")
+                        return
             for k, v in outer.items():
                 for x, y in v.items():
                     if y == username:
