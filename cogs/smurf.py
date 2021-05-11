@@ -88,10 +88,29 @@ class Smurf(commands.Cog):
                         return
             await ctx.send(f"{username} does not exist")
 
+    #Edit information group
+    @commands.group(invoke_without_command=True)
+    async def se(self, ctx, username, newusername, newpassword, newrank, newnumber):
+            if smurfchannelcheck(ctx.channel.id):
+                newrank = newrank.upper()
+                if (newnumber == '0' or newnumber == '1' or newnumber == '2' or newnumber == '3') and (not any(i.isdigit() for i in newrank)):
+                    for k, v in outer.items():
+                        for x, y in v.items():
+                            if y == username:
+                                v['Username'] = newusername
+                                v['Password'] = newpassword
+                                v['Rank'] = newrank
+                                v['Rank Number'] = newnumber
+                                cogs._json.write_json(outer, "smurfs")
+                                await ctx.send(f"{username} became: ```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}```")
+                                return
+                else:
+                    await ctx.send(f"Invalid Rank Format")
+                await ctx.send(f"{username} does not exist")
 
     #Changes the rank of a smurf account
-    @commands.command(name='serank')
-    async def _serank(self, ctx, username, rank, number):
+    @se.command()
+    async def rank(self, ctx, username, rank, number):
         if smurfchannelcheck(ctx.channel.id):
             if (number == '0' or number == '1' or number == '2' or number == '3') and (not any(i.isdigit() for i in rank)):
                 rank = rank.upper()
@@ -107,10 +126,9 @@ class Smurf(commands.Cog):
             else:
                 await ctx.send(f"Invalid Rank Format")
 
-
     #Updates the account username
-    @commands.command(name='seusername')
-    async def _seusername(self, ctx, username, newusername):
+    @se.command()
+    async def username(self, ctx, username, newusername):
         if smurfchannelcheck(ctx.channel.id):
             for k, v in outer.items():
                 for x, y in v.items():
@@ -121,10 +139,9 @@ class Smurf(commands.Cog):
                         return
             await ctx.send(f"{username} does not exist")
 
-
     #Updates the account password
-    @commands.command(name='sepassword')
-    async def _sepassword(self, ctx, username, newpassword):
+    @se.command()
+    async def password(self, ctx, username, newpassword):
         if smurfchannelcheck(ctx.channel.id):
             for k, v in outer.items():
                 for x, y in v.items():
@@ -135,30 +152,8 @@ class Smurf(commands.Cog):
                         return
             await ctx.send(f"{username} does not exist")
 
-
-    #Updates all information about the account
-    @commands.command(name='seall')
-    async def _seall(self, ctx, username, newusername, newpassword, newrank, newnumber):
-        if smurfchannelcheck(ctx.channel.id):
-            newrank = newrank.upper()
-            if (newnumber == '0' or newnumber == '1' or newnumber == '2' or newnumber == '3') and (not any(i.isdigit() for i in newrank)):
-                for k, v in outer.items():
-                    for x, y in v.items():
-                        if y == username:
-                            v['Username'] = newusername
-                            v['Password'] = newpassword
-                            v['Rank'] = newrank
-                            v['Rank Number'] = newnumber
-                            cogs._json.write_json(outer, "smurfs")
-                            await ctx.send(f"{username} became: ```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}```")
-                            return
-            else:
-                await ctx.send(f"Invalid Rank Format")
-            await ctx.send(f"{username} does not exist")
-
-
     #Update the status of an account
-    @commands.command(name='susing')
+    @commands.command(name='suse')
     async def _susing(self, ctx, username):
         if smurfchannelcheck(ctx.channel.id):
             for k, v in outer.items():
@@ -183,9 +178,19 @@ class Smurf(commands.Cog):
             await ctx.send(f"{username} does not exist")
 
 
+    #Prints every account in the database
+    @commands.group(invoke_without_command=True)
+    async def ss(self, ctx):
+        for k, v in outer.items():
+            if v['Status']:
+                status = "In Use"
+            else:
+                status = "Not In Use"
+            await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: {status}\nLast User: {v['Last User']}```")
+
     #Finds all accounts with the wanted rank
-    @commands.command(name='ssrank')
-    async def _sranksearch(self, ctx, rank):
+    @ss.command()
+    async def rank(self, ctx, rank):
         if smurfchannelcheck(ctx.channel.id):
             if not any(i.isdigit() for i in rank):
                 found = False
@@ -200,10 +205,9 @@ class Smurf(commands.Cog):
             else:
                 await ctx.send(f"Invalid Rank Format")
 
-
     #Finds the account with the wanted username
-    @commands.command(name='ssusername')
-    async def _susernamesearch(self, ctx, username):
+    @ss.command()
+    async def username(self, ctx, username):
         if smurfchannelcheck(ctx.channel.id):
             for k, v in outer.items():
                 for x, y in v.items():
@@ -215,20 +219,6 @@ class Smurf(commands.Cog):
                         await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: {v['Status']}\nLast User: {v['Last User']}```")
                         return
             await ctx.send(f"{username} was not found")
-
-
-    #Prints every account in the database
-    @commands.command(name='sprint')
-    @commands.cooldown(1,10, commands.BucketType.guild)
-    async def _sprint(self, ctx):
-        if smurfchannelcheck(ctx.channel.id):
-            for k, v in outer.items():
-                if v['Status']:
-                    status = "In Use"
-                else:
-                    status = "Not In Use"
-                await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: {status}\nLast User: {v['Last User']}```")
-
 
     #Clears the entire list (ONLY FOR BOT OWNER)
     @commands.command(name='sclear')

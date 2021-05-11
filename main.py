@@ -39,8 +39,10 @@ async def on_command_error(ctx, error):
             await ctx.send(f' You must wait {int(m)} minutes and {int(s)} seconds to use this command!')
         else:
             await ctx.send(f' You must wait {int(h)} hours, {int(m)} minutes and {int(s)} seconds to use this command!')
+
     if isinstance(error, commands.CheckFailure):
         await ctx.send("Please don't use that command")
+
     raise error
 
 #Turn off the bot (ONLY FOR BOT OWNER)

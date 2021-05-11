@@ -17,23 +17,23 @@ Example: $sremove Stinger0nly
 ```
 ```Editing Account Information:
 
-Command: seusername
+Command: se username
 Description: Changes the username of an account in the database
-Usage: $seusername OldUsername NewUsername
-Example: $seusername StingerOnly Stinger0nly
+Usage: $se username OldUsername NewUsername
+Example: $se username StingerOnly Stinger0nly
 
-Command: sepassword
+Command: se password
 Description: Changes the password of an account in the database
-Usage: $sepassword Username NewPassword
-Example: $sepassword Stinger0nly sharedpassword!
+Usage: $se password Username NewPassword
+Example: $se password Stinger0nly sharedpassword!
 
-Command: serank
+Command: se rank
 Description: Changes the rank of an account in the database
-Usage: $editrank Username NewRank NewRankNumber
-Example: $editrank Stinger0nly Bronze 3
+Usage: $se rank Username NewRank NewRankNumber
+Example: $se rank Stinger0nly Bronze 3
 
-Command: seall
+Command: se
 Description: Changes all information about an account in the database
-Usage: $seall OldUsername NewUsername NewPassword NewRank NewRankNumber
-Example: $seall StingerOnly Stinger0nly sharedaccount! Platinum 1
+Usage: $se OldUsername NewUsername NewPassword NewRank NewRankNumber
+Example: $se StingerOnly Stinger0nly sharedaccount! Platinum 1
 ```

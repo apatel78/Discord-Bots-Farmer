@@ -1,22 +1,22 @@
 ```Searching for an Account:
 
-Command: ssrank
+Command: ss rank
 Description: Prints all the accounts for the given rank
 Usage: $sranksearch Rank
 Example: $sranksearch Gold
 
-Command: ssusername
+Command: ss username
 Description: Prints the account with the given username
 Usage: $susernamesearch Username
 Example: $susernamesearch Stinger0nly
 
-Command: sprint
+Command: ss
 Description: Prints every account in the database
 Usage: $sprint
 ```
 ```When Using an Account:
 
-Command: susing
+Command: suse
 Description: Use this command before and after playing on an account
 Usage: $susing Username
 Example: $susing Stinger0nly
