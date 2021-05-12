@@ -10,11 +10,6 @@ cwd = Path(__file__).parents[1]
 cwd = str(cwd)
 outer = {}
 outer = json.load(open(cwd+'\localstorage\\smurfs.json'))
-outerKey = 0
-
-#Potential Improvements:
-#Sort the Dictionary
-#React to message depending on successful or not
 
 #Smurf channel checker
 def smurfchannelcheck(channel):
@@ -37,12 +32,11 @@ class Smurf(commands.Cog):
             await ctx.send(help1.read())
             await ctx.send(help2.read())
 
-    #MAKE IT SO NO K NUMBERS CAN BE THE SAME
     #Adds a smurf account to the Dicitionary
     @commands.command(name='sadd')
     async def _sadd(self, ctx, username, password, rank, number):
         if smurfchannelcheck(ctx.channel.id):
-            global outerKey
+            outerKey = 0
             for k, v in outer.items():
                 for x, y in v.items():
                     if y == username:
@@ -57,8 +51,10 @@ class Smurf(commands.Cog):
                     if k == outerKey:
                         outerKey = k + 1
                         seen = True
+            rank = rank.upper()
+            if rank == "PLAT":
+                rank == "PLATINUM"
             if (number == '0' or number == '1' or number == '2' or number == '3') and (not any(i.isdigit() for i in rank)):
-                    rank = rank.upper()
                     inner = {
                         'Username': username,
                         'Password': password,
@@ -91,29 +87,32 @@ class Smurf(commands.Cog):
     #Edit information group
     @commands.group(invoke_without_command=True)
     async def se(self, ctx, username, newusername, newpassword, newrank, newnumber):
-            if smurfchannelcheck(ctx.channel.id):
-                newrank = newrank.upper()
-                if (newnumber == '0' or newnumber == '1' or newnumber == '2' or newnumber == '3') and (not any(i.isdigit() for i in newrank)):
-                    for k, v in outer.items():
-                        for x, y in v.items():
-                            if y == username:
-                                v['Username'] = newusername
-                                v['Password'] = newpassword
-                                v['Rank'] = newrank
-                                v['Rank Number'] = newnumber
-                                cogs._json.write_json(outer, "smurfs")
-                                await ctx.send(f"{username} became: ```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}```")
-                                return
-                else:
-                    await ctx.send(f"Invalid Rank Format")
-                await ctx.send(f"{username} does not exist")
-
+        if smurfchannelcheck(ctx.channel.id):
+            newrank = newrank.upper()
+            if newrank == "PLAT":
+                newrank == "PLATINUM"
+            if (newnumber == '0' or newnumber == '1' or newnumber == '2' or newnumber == '3') and (not any(i.isdigit() for i in newrank)):
+                for k, v in outer.items():
+                    for x, y in v.items():
+                        if y == username:
+                            v['Username'] = newusername
+                            v['Password'] = newpassword
+                            v['Rank'] = newrank
+                            v['Rank Number'] = newnumber
+                            cogs._json.write_json(outer, "smurfs")
+                            await ctx.send(f"{username} became: ```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}```")
+                            return
+            else:
+                await ctx.send(f"Invalid Rank Format")
+            await ctx.send(f"{username} does not exist")
     #Changes the rank of a smurf account
     @se.command()
-    async def rank(self, ctx, username, rank, number):
+    async def erank(self, ctx, username, rank, number):
         if smurfchannelcheck(ctx.channel.id):
+            rank = rank.upper()
+            if rank == "PLAT":
+                rank == "PLATINUM"
             if (number == '0' or number == '1' or number == '2' or number == '3') and (not any(i.isdigit() for i in rank)):
-                rank = rank.upper()
                 for k, v in outer.items():
                     for x, y in v.items():
                         if y == username:
@@ -128,7 +127,7 @@ class Smurf(commands.Cog):
 
     #Updates the account username
     @se.command()
-    async def username(self, ctx, username, newusername):
+    async def eusername(self, ctx, username, newusername):
         if smurfchannelcheck(ctx.channel.id):
             for k, v in outer.items():
                 for x, y in v.items():
@@ -141,7 +140,7 @@ class Smurf(commands.Cog):
 
     #Updates the account password
     @se.command()
-    async def password(self, ctx, username, newpassword):
+    async def epassword(self, ctx, username, newpassword):
         if smurfchannelcheck(ctx.channel.id):
             for k, v in outer.items():
                 for x, y in v.items():
@@ -154,7 +153,7 @@ class Smurf(commands.Cog):
 
     #Update the status of an account
     @commands.command(name='suse')
-    async def _susing(self, ctx, username):
+    async def _suse(self, ctx, username):
         if smurfchannelcheck(ctx.channel.id):
             for k, v in outer.items():
                 for x, y in v.items():
@@ -164,8 +163,11 @@ class Smurf(commands.Cog):
             for k, v in outer.items():
                 for x, y in v.items():
                     if y == username:
-                        if  v['Status'] == True:
+                        if  v['Status']:
                             v['Status'] = False
+                        elif v['Status'] and ctx.author.name != v['Last User']:
+                            await ctx.send(f"{username} is currently being used by {v['Last User']}")
+                            return
                         else:
                             v['Status'] = True
                         v['Last User'] = ctx.author.name
@@ -192,13 +194,19 @@ class Smurf(commands.Cog):
     @ss.command()
     async def rank(self, ctx, rank):
         if smurfchannelcheck(ctx.channel.id):
+            rank = rank.upper()
+            if rank == "PLAT":
+                rank == "PLATINUM"
             if not any(i.isdigit() for i in rank):
                 found = False
-                rank = rank.upper()
                 for k, v in outer.items():
                     for x, y in v.items():
                         if y == rank:
-                            await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: {v['Status']}\nLast User: {v['Last User']}```")
+                            if v['Status']:
+                                status = "In Use"
+                            else:
+                                status = "Not In Use"
+                            await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: {status}\nLast User: {v['Last User']}```")
                             found = True
                 if not found:
                     await ctx.send(f"No accounts found in {rank}")
@@ -216,7 +224,7 @@ class Smurf(commands.Cog):
                             status = "In Use"
                         else:
                             status = "Not In Use"
-                        await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: {v['Status']}\nLast User: {v['Last User']}```")
+                        await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: {status}\nLast User: {v['Last User']}```")
                         return
             await ctx.send(f"{username} was not found")
 
@@ -227,6 +235,17 @@ class Smurf(commands.Cog):
         outer.clear()
         cogs._json.write_json(outer, "smurfs")
         await ctx.send(f"List Cleared")
+
+    #Sign another user out of an account
+    @commands.command(name='ssignout')
+    @commands.is_owner()
+    async def _ssignout(self, ctx, username):
+        for k, v in outer.items():
+            for x, y in v.items():
+                if y == username:
+                    v['Status'] = False
+                    await ctx.send(f"{username} is no longer in use")
+
 
 def setup(bot):
     bot.add_cog(Smurf(bot))

@@ -2,24 +2,24 @@
 
 Command: ss rank
 Description: Prints all the accounts for the given rank
-Usage: $sranksearch Rank
-Example: $sranksearch Gold
+Usage: $ss rank Rank
+Example: $ss rank Gold
 
 Command: ss username
 Description: Prints the account with the given username
-Usage: $susernamesearch Username
-Example: $susernamesearch Stinger0nly
+Usage: $ss username Username
+Example: $ss username Stinger0nly
 
 Command: ss
 Description: Prints every account in the database
-Usage: $sprint
+Usage: $ss
 ```
 ```When Using an Account:
 
 Command: suse
 Description: Use this command before and after playing on an account
-Usage: $susing Username
-Example: $susing Stinger0nly
+Usage: $suse Username
+Example: $suse Stinger0nly
 ```
 ```Miscellaneous:
 
