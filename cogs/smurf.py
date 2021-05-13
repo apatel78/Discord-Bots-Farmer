@@ -3,6 +3,8 @@ from discord.ext import commands
 import platform
 from pathlib import Path
 import json
+import os
+import random
 
 import cogs._json
 
@@ -182,6 +184,7 @@ class Smurf(commands.Cog):
 
     #Prints every account in the database
     @commands.group(invoke_without_command=True)
+    @commands.cooldown(1,10, commands.BucketType.guild)
     async def ss(self, ctx):
         for k, v in outer.items():
             if v['Status']:
@@ -245,6 +248,14 @@ class Smurf(commands.Cog):
                 if y == username:
                     v['Status'] = False
                     await ctx.send(f"{username} is no longer in use")
+
+    @commands.command()
+    @commands.cooldown(1,5, commands.BucketType.guild)
+    async def cj(self, ctx):
+        image = os.listdir(cwd+'./cogs/testcursed/')
+        imgString = random.choice(image)
+        path = "./cogs/testcursed/" + imgString
+        await ctx.send(file=discord.File(path))
 
 
 def setup(bot):
