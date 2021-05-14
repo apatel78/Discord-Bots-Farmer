@@ -9,40 +9,51 @@ import random
 cwd = Path(__file__).parents[1]
 cwd = str(cwd)
 
+#Characters for each user
 human = 'x'
 robot = 'o'
+
+#If there is a game going on right now
 inProgress = False
+
+#Game type
 isImpossible = False
 isEasy = False
 isHuman = False
+
+#If the player is going second
 isSecond = False
+
+#If the player is player one
 isPlayerOne = False
+
+#The gameboard
 gameboard = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
 
 #Return 2 if AI wins, -2 if humann wins, 1 if the game can still be played, 0 if draw
 def findWinner(gameboard, human, robot):
 
     for row in range(3):
-        if(gameboard[row][0] == gameboard[row][1] and gameboard[row][0] == gameboard[row][2]):
+        if(gameboard[row][0] == gameboard[row][1] == gameboard[row][2]):
             if gameboard[row][0] == human:
                 return -2
             elif gameboard[row][0] == robot:
                 return 2
 
     for col in range(3):
-        if(gameboard[0][col] == gameboard[1][col] and gameboard[0][col] == gameboard[2][col]):
+        if(gameboard[0][col] == gameboard[1][col] == gameboard[2][col]):
             if gameboard[0][col] == human:
                 return -2
             elif gameboard[0][col] == robot:
                 return 2
 
-    if(gameboard[0][0] == gameboard[1][1] and gameboard[0][0] == gameboard[2][2]):
+    if(gameboard[0][0] == gameboard[1][1] == gameboard[2][2]):
         if gameboard[0][0] == human:
             return -2
         elif gameboard[0][0] == robot:
             return 2
 
-    if(gameboard[0][2] == gameboard[1][1] and gameboard[0][2] == gameboard[2][0]):
+    if(gameboard[0][2] == gameboard[1][1] == gameboard[2][0]):
         if gameboard[0][2] == human:
             return -2
         elif gameboard[0][2] == robot:
@@ -170,7 +181,7 @@ class TicTacToe(commands.Cog):
         elif gamemode == 'h':
             isHuman = True
             inProgress = True
-            await ctx.send(f"You have selected the Human vs Human. Player 1, use tadd tilespot to begin. Ex: tadd 4")
+            await ctx.send(f"You have selected the Human vs Human. Player One, use tadd tilespot to begin. Ex: tadd 4")
         elif gamemode == 'i':
             isImpossible = True
             await ctx.send(f"You have selected the impossible robot. Use tbegin f to go first or tbegin s to go second")
@@ -238,7 +249,7 @@ class TicTacToe(commands.Cog):
         if not inProgress:
             await ctx.send(f"A game has not been started. Please use thelp for more information")
             return
-            
+
         number = int(number)
 
         #Check if the number is in the given range
@@ -301,7 +312,7 @@ class TicTacToe(commands.Cog):
                 await ctx.send(f"[   {gameboard[0][0]}   ] [   {gameboard[0][1]}   ] [   {gameboard[0][2]}   ]\n[   {gameboard[1][0]}   ] [   {gameboard[1][1]}   ] [   {gameboard[1][2]}   ]\n[   {gameboard[2][0]}   ] [   {gameboard[2][1]}   ] [   {gameboard[2][2]}   ]")
 
             if isHuman:
-                await ctx.send(f"Player 2 has won!")
+                await ctx.send(f"Player Two has won!")
             else:
                 await ctx.send(f"Unlucky, you lost")
 
@@ -318,7 +329,7 @@ class TicTacToe(commands.Cog):
             if not isSecond:
                 await ctx.send(f"[   {gameboard[0][0]}   ] [   {gameboard[0][1]}   ] [   {gameboard[0][2]}   ]\n[   {gameboard[1][0]}   ] [   {gameboard[1][1]}   ] [   {gameboard[1][2]}   ]\n[   {gameboard[2][0]}   ] [   {gameboard[2][1]}   ] [   {gameboard[2][2]}   ]")
             if isHuman:
-                await ctx.send(f"Player 1 has won!")
+                await ctx.send(f"Player One has won!")
             else:
                 await ctx.send(f"Congrats, you won!")
 
