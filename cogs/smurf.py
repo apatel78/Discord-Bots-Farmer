@@ -165,11 +165,11 @@ class Smurf(commands.Cog):
             for k, v in outer.items():
                 for x, y in v.items():
                     if y == username:
-                        if  v['Status']:
-                            v['Status'] = False
-                        elif v['Status'] and ctx.author.name != v['Last User']:
+                        if  v['Status'] and ctx.author.name != v['Last User']:
                             await ctx.send(f"{username} is currently being used by {v['Last User']}")
                             return
+                        elif v['Status']:
+                            v['Status'] = False
                         else:
                             v['Status'] = True
                         v['Last User'] = ctx.author.name
