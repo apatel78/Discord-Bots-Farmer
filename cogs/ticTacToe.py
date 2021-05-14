@@ -152,6 +152,7 @@ class TicTacToe(commands.Cog):
 
     #Prints a helpful message about this game
     @commands.command()
+    @commands.cooldown(1,10, commands.BucketType.guild)
     async def thelp(self, ctx):
         await ctx.send(f"```Welcome to TicTacToe. There are three ways to play this game: Versus another human (h), an easy robot (e), and an impossible robot (i). Start the game by having Player One use tbegin gamemode.\nEx: tbegin e```")
         await ctx.send(f"```If you would like to change your symbol, Player One should use tsymbol symbol before using tbegin.\nEx: tsymbol x or tsymbol o```")
@@ -363,6 +364,7 @@ class TicTacToe(commands.Cog):
 
     #Print which number corresponds to which spot on the gameboard
     @commands.command()
+    @commands.cooldown(1,10, commands.BucketType.guild)
     async def tboard(self, ctx):
         await ctx.send("[   1   ] [   2   ] [   3   ]\n[  4   ] [   5   ] [   6   ]\n[   7  ] [   8   ] [   9   ]")
 
