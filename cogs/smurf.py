@@ -13,6 +13,8 @@ cwd = str(cwd)
 outer = {}
 outer = json.load(open(cwd+'\localstorage\\smurfs.json'))
 
+#inuse command
+
 #Smurf channel checker
 def smurfchannelcheck(channel):
     if channel == 840414501660917790 or channel == 840705049444483102:
@@ -190,7 +192,6 @@ class Smurf(commands.Cog):
                         return
             await ctx.send(f"{username} does not exist")
 
-
     #Prints every account in the database
     @commands.group(invoke_without_command=True)
     @commands.cooldown(1,10, commands.BucketType.guild)
@@ -241,6 +242,17 @@ class Smurf(commands.Cog):
                         await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: {status}\nLast User: {v['Last User']}```")
                         return
             await ctx.send(f"{username} was not found")
+
+    #Prints the accounts that are currently being used
+    @ss.command()
+    async def use(self, ctx):
+        if smurfchannelcheck(ctx.channel.id):
+            for k, v in outer.items():
+                for x, y in v.items():
+                    if v['Status']:
+                        await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: In Use\nLast User: {v['Last User']}```")
+                        return
+            await ctx.send(f"No accounts are currently in use")
 
     #Clears the entire list (ONLY FOR BOT OWNER)
     @commands.command(name='sclear')

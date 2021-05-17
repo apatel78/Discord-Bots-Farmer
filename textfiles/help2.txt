@@ -10,6 +10,10 @@ Description: Prints the account with the given username
 Usage: $ss username Username
 Example: $ss username Stinger0nly
 
+Command: ss use
+Description: Prints the accounts that are currently in use
+Usage: $ss use
+
 Command: ss
 Description: Prints every account in the database
 Usage: $ss
