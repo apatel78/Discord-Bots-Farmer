@@ -248,11 +248,13 @@ class Smurf(commands.Cog):
     async def use(self, ctx):
         if smurfchannelcheck(ctx.channel.id):
             isFound = True
+            user = ''
             for k, v in outer.items():
                 for x, y in v.items():
-                    if v['Status']:
+                    if v['Status'] and not user == v['Username']:
                         await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: In Use\nLast User: {v['Last User']}```")
                         isFound = False
+                        user = v['Username']
         if(isFound):
             await ctx.send(f"No accounts are currently in use")
 
