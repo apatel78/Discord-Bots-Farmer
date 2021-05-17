@@ -247,11 +247,13 @@ class Smurf(commands.Cog):
     @ss.command()
     async def use(self, ctx):
         if smurfchannelcheck(ctx.channel.id):
+            isFound = True
             for k, v in outer.items():
                 for x, y in v.items():
                     if v['Status']:
                         await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: In Use\nLast User: {v['Last User']}```")
-                        return
+                        isFound = False
+        if(isFound):
             await ctx.send(f"No accounts are currently in use")
 
     #Clears the entire list (ONLY FOR BOT OWNER)
