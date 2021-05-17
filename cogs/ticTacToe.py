@@ -22,7 +22,7 @@ isEasy = False
 isHuman = False
 
 #If the player is going second
-isSecond = False
+isFirst = False
 
 #If the player is player one
 isPlayerOne = False
@@ -166,7 +166,7 @@ class TicTacToe(commands.Cog):
         global isImpossible
         global isEasy
         global isHuman
-        global isSecond
+        global isFirst
         global gameboard
         global inProgress
 
@@ -193,7 +193,7 @@ class TicTacToe(commands.Cog):
             else:
                 await ctx.send(f"Wrong gamemode")
             inProgress = True
-            isSecond = True
+            isFirst = True
 
         elif gamemode == 's':
             if isEasy or isImpossible and not isHuman:
@@ -245,7 +245,7 @@ class TicTacToe(commands.Cog):
         global isEasy
         global isHuman
         global isPlayerOne
-        global isSecond
+        global isFirst
 
         if not inProgress:
             await ctx.send(f"A game has not been started. Please use thelp for more information")
@@ -283,18 +283,20 @@ class TicTacToe(commands.Cog):
         else:
             gameboard[coordinate[0]][coordinate[1]] = human
 
+        isDone = True
         #If game can still continue
         if findWinner(gameboard, human, robot) == 1:
             if isImpossible:
                 simulateImpossible(gameboard, human, robot)
             elif isEasy:
                 simulateEasy(gameboard, human, robot)
+            isDone = False
             #Print the current state of the gameboard
             await ctx.send(f"[   {gameboard[0][0]}   ] [   {gameboard[0][1]}   ] [   {gameboard[0][2]}   ]\n[   {gameboard[1][0]}   ] [   {gameboard[1][1]}   ] [   {gameboard[1][2]}   ]\n[   {gameboard[2][0]}   ] [   {gameboard[2][1]}   ] [   {gameboard[2][2]}   ]")
 
         #If the game was a draw
         if findWinner(gameboard, human, robot) == 0:
-            if not isSecond:
+            if isFirst or isDone:
                 await ctx.send(f"[   {gameboard[0][0]}   ] [   {gameboard[0][1]}   ] [   {gameboard[0][2]}   ]\n[   {gameboard[1][0]}   ] [   {gameboard[1][1]}   ] [   {gameboard[1][2]}   ]\n[   {gameboard[2][0]}   ] [   {gameboard[2][1]}   ] [   {gameboard[2][2]}   ]")
 
             await ctx.send(f"The game ended in a draw!")
@@ -303,13 +305,13 @@ class TicTacToe(commands.Cog):
             isImpossible = False
             isHuman = False
             isEasy = False
-            isSecond = False
+            isFirst = False
 
             gameboard = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
 
         #If the AI won
         elif findWinner(gameboard, human, robot) == 2:
-            if not isSecond:
+            if isFirst or isDone:
                 await ctx.send(f"[   {gameboard[0][0]}   ] [   {gameboard[0][1]}   ] [   {gameboard[0][2]}   ]\n[   {gameboard[1][0]}   ] [   {gameboard[1][1]}   ] [   {gameboard[1][2]}   ]\n[   {gameboard[2][0]}   ] [   {gameboard[2][1]}   ] [   {gameboard[2][2]}   ]")
 
             if isHuman:
@@ -321,13 +323,13 @@ class TicTacToe(commands.Cog):
             isImpossible = False
             isHuman = False
             isEasy = False
-            isSecond = False
+            isFirst = False
 
             gameboard = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
 
         #If the human won
         elif findWinner(gameboard, human, robot) == -2:
-            if not isSecond:
+            if isFirst or isDone:
                 await ctx.send(f"[   {gameboard[0][0]}   ] [   {gameboard[0][1]}   ] [   {gameboard[0][2]}   ]\n[   {gameboard[1][0]}   ] [   {gameboard[1][1]}   ] [   {gameboard[1][2]}   ]\n[   {gameboard[2][0]}   ] [   {gameboard[2][1]}   ] [   {gameboard[2][2]}   ]")
             if isHuman:
                 await ctx.send(f"Player One has won!")
@@ -338,7 +340,7 @@ class TicTacToe(commands.Cog):
             isImpossible = False
             isHuman = False
             isEasy = False
-            isSecond = False
+            isFirst = False
 
             gameboard = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
 
@@ -351,7 +353,7 @@ class TicTacToe(commands.Cog):
         global isImpossible
         global isEasy
         global isHuman
-        global isSecond
+        global isFirst
 
         await ctx.send(f"The game has ended, please use tbegin to start a new one")
         gameboard = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
@@ -360,7 +362,7 @@ class TicTacToe(commands.Cog):
         isImpossible = False
         isHuman = False
         isEasy = False
-        isSecond = False
+        isFirst = False
 
     #Print which number corresponds to which spot on the gameboard
     @commands.command()
