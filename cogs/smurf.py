@@ -105,12 +105,31 @@ class Smurf(commands.Cog):
                         if y == username:
                             if (newnumber == '0'):
                                 rnumber = ''
+                            else:
+                                rnumber = newnumber
                             v['Username'] = newusername
                             v['Password'] = newpassword
                             v['Rank'] = newrank
                             v['Rank Number'] = rnumber
                             cogs._json.write_json(outer, "smurfs")
-                            await ctx.send(f"{username} became: ```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}```")
+                            if v['Status']:
+                                status = "In Use"
+                            else:
+                                status = "Not In Use"
+                            if v['Last User'] == "":
+                                user = "None"
+                            else:
+                                user = v['Last User']
+                            rank = v['Rank'] + " "
+                            rank = rank + v['Rank Number']
+                            embed = discord.Embed(color=ctx.author.color, timestamp=ctx.message.created_at)
+                            embed.add_field(name="Username", value=f"{v['Username']}", inline=True)
+                            embed.add_field(name="Password", value=f"{v['Password']}", inline=True)
+                            embed.add_field(name="Rank", value=f"{rank}", inline=False)
+                            embed.add_field(name="Status", value=f"{status}", inline=True)
+                            embed.add_field(name="Last User", value=f"{user}", inline=True)
+                            embed.set_author(name=f"Information for {v['Username']}", icon_url="https://cdn.discordapp.com/attachments/562425394402164736/844299299483680788/HafP3jMkeAAAAAElFTkSuQmCC.png")
+                            await ctx.send(embed=embed)
                             return
             else:
                 await ctx.send(f"Invalid Rank Format")
@@ -202,7 +221,20 @@ class Smurf(commands.Cog):
                     status = "In Use"
                 else:
                     status = "Not In Use"
-                await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: {status}\nLast User: {v['Last User']}```")
+                if v['Last User'] == "":
+                    user = "None"
+                else:
+                    user = v['Last User']
+                rank = v['Rank'] + " "
+                rank = rank + v['Rank Number']
+                embed = discord.Embed(color=ctx.author.color, timestamp=ctx.message.created_at)
+                embed.add_field(name="Username", value=f"{v['Username']}", inline=True)
+                embed.add_field(name="Password", value=f"{v['Password']}", inline=True)
+                embed.add_field(name="Rank", value=f"{rank}", inline=False)
+                embed.add_field(name="Status", value=f"{status}", inline=True)
+                embed.add_field(name="Last User", value=f"{user}", inline=True)
+                embed.set_author(name=f"Information for {v['Username']}", icon_url="https://cdn.discordapp.com/attachments/562425394402164736/844299299483680788/HafP3jMkeAAAAAElFTkSuQmCC.png")
+                await ctx.send(embed=embed)
 
     #Finds all accounts with the wanted rank
     @ss.command()
@@ -221,7 +253,20 @@ class Smurf(commands.Cog):
                                 status = "In Use"
                             else:
                                 status = "Not In Use"
-                            await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: {status}\nLast User: {v['Last User']}```")
+                            if v['Last User'] == "":
+                                user = "None"
+                            else:
+                                user = v['Last User']
+                            printedrank = v['Rank'] + " "
+                            printedrank = printedrank + v['Rank Number']
+                            embed = discord.Embed(color=ctx.author.color, timestamp=ctx.message.created_at)
+                            embed.add_field(name="Username", value=f"{v['Username']}", inline=True)
+                            embed.add_field(name="Password", value=f"{v['Password']}", inline=True)
+                            embed.add_field(name="Rank", value=f"{printedrank}", inline=False)
+                            embed.add_field(name="Status", value=f"{status}", inline=True)
+                            embed.add_field(name="Last User", value=f"{user}", inline=True)
+                            embed.set_author(name=f"Information for {v['Username']}", icon_url="https://cdn.discordapp.com/attachments/562425394402164736/844299299483680788/HafP3jMkeAAAAAElFTkSuQmCC.png")
+                            await ctx.send(embed=embed)
                             found = True
                 if not found:
                     await ctx.send(f"No accounts found in {rank}")
@@ -239,7 +284,20 @@ class Smurf(commands.Cog):
                             status = "In Use"
                         else:
                             status = "Not In Use"
-                        await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: {status}\nLast User: {v['Last User']}```")
+                        if v['Last User'] == "":
+                            user = "None"
+                        else:
+                            user = v['Last User']
+                        rank = v['Rank'] + " "
+                        rank = rank + v['Rank Number']
+                        embed = discord.Embed(color=ctx.author.color, timestamp=ctx.message.created_at)
+                        embed.add_field(name="Username", value=f"{v['Username']}", inline=True)
+                        embed.add_field(name="Password", value=f"{v['Password']}", inline=True)
+                        embed.add_field(name="Rank", value=f"{rank}", inline=False)
+                        embed.add_field(name="Status", value=f"{status}", inline=True)
+                        embed.add_field(name="Last User", value=f"{user}", inline=True)
+                        embed.set_author(name=f"Information for {v['Username']}", icon_url="https://cdn.discordapp.com/attachments/562425394402164736/844299299483680788/HafP3jMkeAAAAAElFTkSuQmCC.png")
+                        await ctx.send(embed=embed)
                         return
             await ctx.send(f"{username} was not found")
 
@@ -252,7 +310,24 @@ class Smurf(commands.Cog):
             for k, v in outer.items():
                 for x, y in v.items():
                     if v['Status'] and not user == v['Username']:
-                        await ctx.send(f"```Username: {v['Username']}\nPassword: {v['Password']}\nRank: {v['Rank']} {v['Rank Number']}\nStatus: In Use\nLast User: {v['Last User']}```")
+                        if v['Status']:
+                            status = "In Use"
+                        else:
+                            status = "Not In Use"
+                        if v['Last User'] == "":
+                            user = "None"
+                        else:
+                            user = v['Last User']
+                        rank = v['Rank'] + " "
+                        rank = rank + v['Rank Number']
+                        embed = discord.Embed(color=ctx.author.color, timestamp=ctx.message.created_at)
+                        embed.add_field(name="Username", value=f"{v['Username']}", inline=True)
+                        embed.add_field(name="Password", value=f"{v['Password']}", inline=True)
+                        embed.add_field(name="Rank", value=f"{rank}", inline=False)
+                        embed.add_field(name="Status", value=f"{status}", inline=True)
+                        embed.add_field(name="Last User", value=f"{user}", inline=True)
+                        embed.set_author(name=f"Information for {v['Username']}", icon_url="https://cdn.discordapp.com/attachments/562425394402164736/844299299483680788/HafP3jMkeAAAAAElFTkSuQmCC.png")
+                        await ctx.send(embed=embed)
                         isFound = False
                         user = v['Username']
         if(isFound):
