@@ -149,9 +149,9 @@ class Smurf(commands.Cog):
                             if (number == '0'):
                                 rnumber = ''
                             v['Rank'] = rank
-                            v['Rank Number'] = rnumber
+                            v['Rank Number'] = number
                             cogs._json.write_json(outer, "smurfs")
-                            await ctx.send(f"{username} had its rank changed to {rank} {rnumber}")
+                            await ctx.send(f"{username} had its rank changed to {rank} {number}")
                             return
                 await ctx.send(f"{username} does not exist")
             else:
