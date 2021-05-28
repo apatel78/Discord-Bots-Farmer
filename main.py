@@ -1,27 +1,37 @@
-#Import
-import discord
-from discord.ext import commands
-import logging
-from pathlib import Path
-import json
+#Standard Libraries
 import os
+import json
 import datetime
+import logging
+
+#Third Party
+import discord
+from pathlib import Path
+import motor.motor_asyncio
+from discord.ext import commands
+
+#Local
+import utils.json
+from utils.mongo import Document
 
 #Needed stuff
 cwd = Path(__file__).parents[0]
 cwd = str(cwd)
 print(f"{cwd}\n-----")
 
-secret_file = json.load(open(cwd+'\localstorage\\token.json'))
+secret_file = utils.json.read_json('token')
 bot = commands.Bot(command_prefix='!', case_insensitive=True, owner_id=secret_file['ownerid'])
 bot.config_token = secret_file['token']
+bot.connection_url = secret_file["mongo"]
 logging.basicConfig(level=logging.INFO)
 
 #When bot is turned on, load the data
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Game(name=f"I am The Farmer"))
-
+    bot.mongo = motor.motor_asyncio.AsyncIOMotorClient(str(bot.connection_url))
+    bot.db = bot.mongo["Smurfs"]
+    bot.config = Document(bot.db, "smurfs")
 
 #Error Handling
 @bot.event
