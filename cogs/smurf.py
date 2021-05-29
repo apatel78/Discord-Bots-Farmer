@@ -51,8 +51,8 @@ class Smurf(commands.Cog):
     @commands.cooldown(1,30, commands.BucketType.guild)
     async def shelp(self, ctx):
         if smurfchannelcheck(ctx.channel.id):
-            help1 = open(cwd+'\\textfiles\\help1.txt', "r")
-            help2 = open(cwd+'\\textfiles\\help2.txt', "r")
+            help1 = open(cwd+'/textfiles/help1.txt', "r")
+            help2 = open(cwd+'/textfiles/help2.txt', "r")
             await ctx.send(help1.read())
             await ctx.send(help2.read())
 
