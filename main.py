@@ -31,7 +31,7 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name=f"I am The Farmer"))
     bot.mongo = motor.motor_asyncio.AsyncIOMotorClient(str(bot.connection_url))
     bot.db = bot.mongo["Smurfs"]
-    bot.config = Document(bot.db, "smurfs")
+    bot.config = Document(bot.db, "testing")
 
 #Error Handling
 @bot.event
